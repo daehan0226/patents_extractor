@@ -9,7 +9,7 @@ from src.utils.helper import get_files_from_dir
 
 
 def extract_patents_from_excel():
-    
+
     logging = Logger('extract patents')
     logging.info("start extract patents")
 
@@ -17,16 +17,16 @@ def extract_patents_from_excel():
     filenames = get_files_from_dir(data_path)
 
     for file in filenames:
-        df = pd.read_excel(f"{data_path}/{file}", skiprows=7)
+        df = pd.read_excel(f"{data_path}/{file}", skiprows=7).fillna('')
         columns = list(df.columns)
-        patents = []
         for i, row in df.iterrows():
             patent = {}
             for col in columns:
                 patent[col] = row[col]
-            patents.append(PatentModel.convert_patent_info_keys_to_english(patent))
-            result = PatentModel.create(patent)
-            print("result : ", result)
-        logging.info(f"patent count : {len(patents)} from {file}" )
+            patent_with_en_keys = PatentModel.convert_patent_info_keys_to_english(patent)
+            patent = PatentModel.set_patent_data(patent_with_en_keys)
+            print(patent)
+            # result = PatentModel.create(**patent)
+            # print("result : ", result)
         logging.info("finished")
     
