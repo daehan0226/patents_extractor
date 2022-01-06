@@ -28,9 +28,8 @@ class BaseDocument:
     @classmethod
     def create(cls, **kwargs):
         doc = cls.validate_schema(kwargs)
-        # print(doc)
-        # result = cls.get_collection().insert_one(doc)
-        # return cls.get(id=result.inserted_id)
+        result = cls.get_collection().insert_one(doc)
+        return cls.get(id=result.inserted_id)
         
     @classmethod
     def get(cls, **kwargs):
