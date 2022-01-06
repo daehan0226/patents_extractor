@@ -4,14 +4,6 @@
 * 엑셀 파일은 최대 5000건까지 저장되어 있음
 * 1~7번 row는 데이터가 아닌 특허 검색 관련 정보가 기재되어 있음
 
-### Git 브랜치
-* dev - 기능 단위 푸쉬후 main 으로 PR
-* main - PR된 커밋들의 테스트 결과 확인 후 merge confirm
-
-### Test
-* unittest
-
-
 ### MongoDB
 1. 필드 관련
    * 검색 고려하여 인덱싱이 필요한 필드 : title, applicant, claim, abstract
@@ -21,3 +13,10 @@
 
 ### Mongodb 데이터 검색
 1. API 개발(Query) 필요
+
+### Git 브랜치
+* dev - 기능 단위 푸쉬후 main 으로 PR
+* main - PR된 커밋들의 테스트 결과 확인 후 confirm merge
+
+### Test
+* unittest
