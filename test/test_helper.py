@@ -29,7 +29,7 @@ class FileHandlerTests(unittest.TestCase):
                 pass
 
     def test_get_files_from_dir(self):
-        self.assertEqual(get_files_from_dir(self.dir), self.files)
+        self.assertEqual(set(get_files_from_dir(self.dir)), set(self.files))
         
     def tearDown(self):
         shutil.rmtree(self.dir)
