@@ -25,8 +25,8 @@ class FileHandlerTests(unittest.TestCase):
     def setUp(self):
         os.mkdir(self.dir)
         for file in self.files:
-            f = open(f"{self.dir}/{file}", "w")
-            f.close()
+            with open(f"{self.dir}/{file}", 'w') as _:
+                pass
 
     def test_get_files_from_dir(self):
         self.assertEqual(get_files_from_dir(self.dir), self.files)
