@@ -12,7 +12,7 @@ def test_convert_to_datetime_raise_error():
     with pytest.raises(StringDateFormat):
         convert_to_datetime("01.05.2022")
 
-def test_get_files_from_dr():
+def test_get_files_from_dir():
     dir = "test_dir"
     files = ["test1.txt","test2.txt","test3.txt"]
     

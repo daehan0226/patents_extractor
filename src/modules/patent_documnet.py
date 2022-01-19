@@ -1,3 +1,4 @@
+from datetime import datetime
 from src.modules.base_document import BaseDocument
 from src.modules.database import Database
 
@@ -14,13 +15,15 @@ class PatentModel(BaseDocument):
             "claim": str,
             "applicant": str,
             "application_number": str,
-            "application_date": str,
+            "application_date": datetime,
             "patent_number": str,
-            "patent_date": str,
+            "patent_date": datetime,
             "ipc_original": str,
             "cpc_original": str,
             "legal_status": str,
             "country": str,
+            "ipc": list,
+            "cpc": list
         }
     }
 
