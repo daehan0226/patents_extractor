@@ -2,7 +2,6 @@ from os import path
 from os.path import dirname, abspath
 import pandas as pd
 import asyncio
-import motor
 
 from motor import motor_asyncio
 
@@ -11,21 +10,6 @@ from src.modules.logger import Logger
 from config.config import config
 
 from src.utils.helper import get_files_from_dir
-
-client = motor_asyncio.AsyncIOMotorClient(config["mongodb_url"])
-db = client['patent_test']
-
-async def async_insert_one(patent):
-    result = await db.patent.insert_one(patent)
-    return result
-
-
-async def insert_patents(patents):
-    future_list = []
-    for patent in patents:
-        future = asyncio.ensure_future(async_insert_one(patent))
-        future_list.append(future)
-    await asyncio.gather(*future_list, return_exceptions=True)
 
 def extract_patents_from_excel():
 
@@ -36,8 +20,9 @@ def extract_patents_from_excel():
 
     # PatentModel.get_collection().drop()
     # PatentModel.get_all()
-
-    # filenames = filenames[:1]
+    # return
+    # filenames = []
+    
 
     patents = []
     for file in filenames:
@@ -51,6 +36,5 @@ def extract_patents_from_excel():
             patent_with_en_keys = PatentModel.convert_patent_info_keys_to_english(patent)
             patents.append(PatentModel.set_patent_data(patent_with_en_keys))
         logging.info("finished")
-    
-
-    asyncio.get_event_loop().run_until_complete(insert_patents(patents))
+        
+    asyncio.get_event_loop().run_until_complete(PatentModel.insert_patents(patents))

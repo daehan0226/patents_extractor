@@ -7,6 +7,7 @@ from src.utils.helper import convert_to_datetime
 
 class PatentModel(BaseDocument):
     db = Database().get_db()
+    
     meta = {
         "collection": "patent",
         "schema": {
