@@ -46,19 +46,10 @@ class BaseDocument:
             )
         result = cls.get_collection().find_one(kwargs)
         return result
-    
-    
-    @classmethod
-    def get_all(cls):
-        result = cls.get_collection().find({})
-        return result
-
 
     @classmethod
     def get_all(cls):
         result = cls.get_collection().find({})
-        for doc in result:
-            print(doc)
         return result
 
         
