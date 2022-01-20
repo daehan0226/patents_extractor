@@ -1,5 +1,4 @@
 from bson import ObjectId
-import asyncio
 from pymongo.common import validate
 
 from src.modules.database import Database, AsyncDatabase
@@ -64,18 +63,9 @@ class BaseDocument:
 
         
     @classmethod
-    async def _async_insert_one(cls, patent):
-        result = await cls.get_async_db_collection().insert_one(patent)
+    async def _async_insert_one(cls, doc):
+        result = await cls.get_async_db_collection().insert_one(doc)
         return result
-        
-
-    @classmethod
-    async def insert_patents(cls, patents):
-        future_list = []
-        for patent in patents:
-            future = asyncio.ensure_future(cls._async_insert_one(patent))
-            future_list.append(future)
-        await asyncio.gather(*future_list, return_exceptions=True)
 
     @classmethod
     def update(cls, id, **kwargs):

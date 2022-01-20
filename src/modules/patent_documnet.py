@@ -1,13 +1,14 @@
 from datetime import datetime
 from src.modules.base_document import BaseDocument
 from src.modules.database import Database
+import asyncio
 
 from src.utils.helper import convert_to_datetime
 
 
 class PatentModel(BaseDocument):
     db = Database().get_db()
-    
+
     meta = {
         "collection": "patent",
         "schema": {
@@ -65,3 +66,12 @@ class PatentModel(BaseDocument):
             if patent_keyes_en.get(k) is not None:
                 result[patent_keyes_en[k]] = v
         return result
+
+    
+    @classmethod
+    async def async_insert_patents(cls, patents):
+        future_list = []
+        for patent in patents:
+            future = asyncio.ensure_future(cls._async_insert_one(patent))
+            future_list.append(future)
+        await asyncio.gather(*future_list, return_exceptions=True)
