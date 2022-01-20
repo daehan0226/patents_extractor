@@ -2,8 +2,9 @@ import os
 import shutil
 from datetime import datetime
 import pytest
-from src.utils.helper import convert_to_datetime, get_files_from_dir
+from src.utils.helper import convert_to_datetime
 from src.utils.error import StringDateFormat
+from src.modules.data_file import DataFile
 
 def test_convert_to_datetime():
     assert(convert_to_datetime("2022.01.05") == datetime(year=2022, month=1, day=5))
@@ -21,6 +22,6 @@ def test_get_files_from_dir():
         with open(f"{dir}/{file}", 'w') as _:
             pass
         
-    assert(set(get_files_from_dir(dir)) == set(files))
+    assert set(DataFile(dir)._get_files_from_data_dir()) == set(files)
 
     shutil.rmtree(dir)
